@@ -1,0 +1,26 @@
+{
+  "name": "@financeplus/csv-commerzbank",
+  "version": "1.0.1",
+  "private": false,
+  "description": "get transactions from commerzbank",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "author": "Lossless GmbH",
+  "license": "MIT",
+  "scripts": {
+    "test": "(tstest test/)",
+    "build": "(tsbuild)",
+    "format": "(gitzone format)"
+  },
+  "devDependencies": {
+    "@gitzone/tsbuild": "^2.0.22",
+    "@gitzone/tstest": "^1.0.15",
+    "@pushrocks/tapbundle": "^3.0.7",
+    "@types/node": "^10.11.7",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0"
+  },
+  "dependencies": {
+    "@pushrocks/smartfile": "^7.0.4"
+  }
+}
