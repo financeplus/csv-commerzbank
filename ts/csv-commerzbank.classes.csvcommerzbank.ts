@@ -50,6 +50,9 @@ export class CsvCommerzbank {
   }
 
   public static async fromCsvString(csvStringArg: string): Promise<CsvCommerzbank> {
+    // lets sanatize the csv string for bom markers
+    csvStringArg = csvStringArg.replace(/^\uFEFF/, '');
+
     // lets parse the data from the directory
     const csvInstance = await plugins.smartcsv.Csv.createCsvFromString(csvStringArg, {
       headers: true
@@ -60,16 +63,15 @@ export class CsvCommerzbank {
       (
         transaction: interfaces.ICommerzbankOriginalTransaction
       ): interfaces.ICommerzbankTransaction => {
-        console.log(transaction);
-        console.log(transaction.Buchungstag);
-        console.log(JSON.stringify(transaction, null, 2));
+        // transaction.Buchungstag = transaction.Wertstellung;
+        // console.log(transaction.Buchungstag);
         const richTransaction: interfaces.ICommerzbankTransaction = {
           simpleTransaction: null,
           original: transaction,
           amount: parseInt(transaction.Betrag, 10),
           currency: transaction.Währung,
           description: transaction.Buchungstext,
-          transactionDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Wertstellung),
+          transactionDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Buchungstag),
           valuationDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Wertstellung),
           transactionType: ((): interfaces.TTransactionType => {
             switch (transaction.Umsatzart) {
