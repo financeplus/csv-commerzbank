@@ -122,7 +122,7 @@ export class CsvCommerzbank {
   /**
    * gets the transactions of this instance
    */
-  public getTransactions() {
+  public async getTransactions() {
     return this.transactionArray;
   }
 
