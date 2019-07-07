@@ -1,3 +1,4 @@
+// tslint:disable-next-line: no-implicit-dependencies
 import { expect, tap } from '@pushrocks/tapbundle';
 import * as csvCommerzbank from '../ts/index';
 import * as path from 'path';

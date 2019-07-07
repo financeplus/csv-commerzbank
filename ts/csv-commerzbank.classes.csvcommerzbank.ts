@@ -1,8 +1,9 @@
 import * as plugins from './csv-commerzbank.plugins';
 
 import * as interfaces from './interfaces';
+import { AcCsvParser } from '@financeplus/finplus-interfaces';
 
-export class CsvCommerzbank {
+export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransaction> {
   // ========= STATIC ================
   /**
    * get the SpendeskData from an extracted direcotory
@@ -113,9 +114,11 @@ export class CsvCommerzbank {
   }
 
   // INSTANCE
+  public paymentProviderName = 'Commerzbank';
   public transactionArray: interfaces.ICommerzbankTransaction[] = [];
 
   constructor(transactionsArg: interfaces.ICommerzbankTransaction[]) {
+    super();
     this.transactionArray = transactionsArg;
   }
 
