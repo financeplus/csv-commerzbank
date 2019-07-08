@@ -14,10 +14,11 @@ export {
 import * as smartcsv from '@pushrocks/smartcsv';
 import * as smartfile from '@pushrocks/smartfile';
 import * as smarthash from '@pushrocks/smarthash';
+import * as smartmoney from '@pushrocks/smartmoney';
 import * as smartstring from '@pushrocks/smartstring';
 import * as smarttime from '@pushrocks/smarttime';
 
-export { smartcsv, smartfile, smartstring, smarttime, smarthash };
+export { smartcsv, smartfile, smarthash, smartmoney, smartstring, smarttime };
 
 // tsclass scope
 import * as tsclass from '@tsclass/tsclass';

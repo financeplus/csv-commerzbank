@@ -79,7 +79,7 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
           simpleTransaction: null,
           transactionHash: null,
           original: transaction,
-          amount: parseInt(transaction.Betrag, 10),
+          amount: plugins.smartmoney.parseEuropeanNumberString(transaction.Betrag),
           currency: transaction.Währung,
           description: transaction.Buchungstext,
           transactionDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Buchungstag),
