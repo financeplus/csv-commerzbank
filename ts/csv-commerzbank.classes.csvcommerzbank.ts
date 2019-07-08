@@ -108,7 +108,7 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
         finalTransactionArray.push(finalTransaction);
       }
 
-    // lets preprocess those paymentså
+    // lets preprocess those payments
     const csvCommerzbankInstance = new CsvCommerzbank(finalTransactionArray);
     return csvCommerzbankInstance;
   }
