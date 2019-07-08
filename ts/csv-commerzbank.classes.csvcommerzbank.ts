@@ -12,7 +12,7 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
   public static async fromFile(filePath: string): Promise<CsvCommerzbank> {
     const reresolvedPath = plugins.path.resolve(filePath);
     const fileString = plugins.smartfile.fs.toStringSync(reresolvedPath);
-    const csvCommerzbank = await CsvCommerzbank.fromCsvString(fileString);
+    const csvCommerzbank = await CsvCommerzbank.fromString(fileString);
     return csvCommerzbank;
   }
 
@@ -50,7 +50,7 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
     return returnCsvCommerzbank;
   }
 
-  public static async fromCsvString(csvStringArg: string): Promise<CsvCommerzbank> {
+  public static async fromString(csvStringArg: string): Promise<CsvCommerzbank> {
     // lets sanatize the csv string for bom markers
     csvStringArg = csvStringArg.replace(/^\uFEFF/, '');
 
@@ -61,6 +61,16 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
 
     // lets differentiate between payments and credits
     const payments: interfaces.ICommerzbankOriginalTransaction[] = await csvInstance.exportAsObject();
+
+    for (const payment of payments) {
+      for (const key of Object.keys(payment)) {
+        const value: string = payment[key];
+        if (value.startsWith('"')) {
+          payment[key] = value.substring(1, value.length-1);
+        }
+      }
+    }
+
     const finalTransactionArray: interfaces.ICommerzbankTransaction[] = [];
     for (const transaction of payments) {
         // transaction.Buchungstag = transaction.Wertstellung;
