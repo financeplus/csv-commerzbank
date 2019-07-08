@@ -3,7 +3,7 @@ import { expect, tap } from '@pushrocks/tapbundle';
 import * as csvCommerzbank from '../ts/index';
 import * as path from 'path';
 
-tap.test('should correctly parse a directory', async tools => {
+const test1 = tap.test('should correctly parse a directory', async tools => {
   if (process.env.CI) {
     return;
   }
@@ -11,6 +11,10 @@ tap.test('should correctly parse a directory', async tools => {
     path.join(__dirname, '../.nogit/')
   );
   console.log(csvSpendeskInstance.transactionArray);
+  console.log(csvSpendeskInstance.transactionArray.map(transaction => {
+    return transaction.simpleTransaction;
+  }));
+  return csvSpendeskInstance.transactionArray;
 });
 
 tap.start();

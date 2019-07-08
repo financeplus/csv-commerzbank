@@ -66,7 +66,7 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
       ): interfaces.ICommerzbankTransaction => {
         // transaction.Buchungstag = transaction.Wertstellung;
         // console.log(transaction.Buchungstag);
-        const richTransaction: interfaces.ICommerzbankTransaction = {
+        const finalTransaction: interfaces.ICommerzbankTransaction = {
           simpleTransaction: null,
           original: transaction,
           amount: parseInt(transaction.Betrag, 10),
@@ -89,14 +89,15 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
             }
           })()
         };
-        richTransaction.simpleTransaction = {
+        finalTransaction.simpleTransaction = {
           id: null,
           accountId: null,
-          amount: richTransaction.amount,
-          description: richTransaction.description,
-          date: richTransaction.transactionDate
+          name: finalTransaction.description,
+          amount: finalTransaction.amount,
+          description: finalTransaction.description,
+          date: finalTransaction.transactionDate
         };
-        return richTransaction;
+        return finalTransaction;
       }
     );
 
