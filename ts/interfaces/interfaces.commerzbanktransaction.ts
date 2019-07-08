@@ -17,6 +17,7 @@ export type TTransactionType = 'Credit' | 'Debit' | 'ActiveTransfer' | 'BankFees
 
 export interface ICommerzbankTransaction {
   simpleTransaction: plugins.tsclass.ITransaction;
+  transactionHash: string;
   original: ICommerzbankOriginalTransaction;
 
   // translated to English

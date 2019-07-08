@@ -60,14 +60,14 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
     });
 
     // lets differentiate between payments and credits
-    const payments: interfaces.ICommerzbankTransaction[] = (await csvInstance.exportAsObject()).map(
-      (
-        transaction: interfaces.ICommerzbankOriginalTransaction
-      ): interfaces.ICommerzbankTransaction => {
+    const payments: interfaces.ICommerzbankOriginalTransaction[] = await csvInstance.exportAsObject();
+    const finalTransactionArray: interfaces.ICommerzbankTransaction[] = [];
+    for (const transaction of payments) {
         // transaction.Buchungstag = transaction.Wertstellung;
         // console.log(transaction.Buchungstag);
         const finalTransaction: interfaces.ICommerzbankTransaction = {
           simpleTransaction: null,
+          transactionHash: null,
           original: transaction,
           amount: parseInt(transaction.Betrag, 10),
           currency: transaction.Währung,
@@ -89,20 +89,27 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
             }
           })()
         };
+
+        // lets assign the transactionHash
+        finalTransaction.transactionHash = await plugins.smarthash.sha265FromObject({
+          description: finalTransaction.description,
+          amount: finalTransaction.amount,
+          date: finalTransaction.valuationDate
+        });
+
         finalTransaction.simpleTransaction = {
-          id: null,
+          id: finalTransaction.transactionHash,
           accountId: null,
           name: finalTransaction.description,
           amount: finalTransaction.amount,
           description: finalTransaction.description,
           date: finalTransaction.transactionDate
         };
-        return finalTransaction;
+        finalTransactionArray.push(finalTransaction);
       }
-    );
 
     // lets preprocess those paymentså
-    const csvCommerzbankInstance = new CsvCommerzbank(payments);
+    const csvCommerzbankInstance = new CsvCommerzbank(finalTransactionArray);
     return csvCommerzbankInstance;
   }
 
