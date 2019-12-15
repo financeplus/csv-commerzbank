@@ -24,7 +24,7 @@
     "@financeplus/finplus-interfaces": "^1.0.11",
     "@pushrocks/smartcsv": "^1.0.22",
     "@pushrocks/smartfile": "^7.0.6",
-    "@pushrocks/smarthash": "^2.1.5",
+    "@pushrocks/smarthash": "^2.1.6",
     "@pushrocks/smartmoney": "^1.0.6",
     "@pushrocks/smartstring": "^3.0.17",
     "@pushrocks/smarttime": "^3.0.12",
