@@ -1,6 +1,6 @@
 {
   "name": "@financeplus/csv-commerzbank",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": false,
   "description": "get transactions from commerzbank",
   "main": "dist/index.js",
