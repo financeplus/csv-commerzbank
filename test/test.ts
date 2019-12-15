@@ -11,9 +11,11 @@ const test1 = tap.test('should correctly parse a directory', async tools => {
     path.join(__dirname, '../.nogit/')
   );
   console.log(csvSpendeskInstance.transactionArray);
-  console.log(csvSpendeskInstance.transactionArray.map(transaction => {
-    return transaction.simpleTransaction;
-  }));
+  console.log(
+    csvSpendeskInstance.transactionArray.map(transaction => {
+      return transaction.simpleTransaction;
+    })
+  );
   return csvSpendeskInstance.transactionArray;
 });
 

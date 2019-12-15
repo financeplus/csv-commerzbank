@@ -13,29 +13,30 @@
     "format": "(gitzone format)"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.0.22",
-    "@gitzone/tstest": "^1.0.15",
-    "@pushrocks/tapbundle": "^3.0.7",
-    "@types/node": "^12.6.1",
-    "tslint": "^5.11.0",
+    "@gitzone/tsbuild": "^2.1.17",
+    "@gitzone/tstest": "^1.0.28",
+    "@pushrocks/tapbundle": "^3.2.0",
+    "@types/node": "^12.12.17",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.15.0"
   },
   "dependencies": {
     "@financeplus/finplus-interfaces": "^1.0.11",
-    "@pushrocks/smartcsv": "^1.0.17",
-    "@pushrocks/smartfile": "^7.0.4",
-    "@pushrocks/smarthash": "^2.0.6",
+    "@pushrocks/smartcsv": "^1.0.19",
+    "@pushrocks/smartfile": "^7.0.6",
+    "@pushrocks/smarthash": "^2.1.1",
     "@pushrocks/smartmoney": "^1.0.6",
-    "@pushrocks/smartstring": "^3.0.10",
+    "@pushrocks/smartstring": "^3.0.17",
     "@pushrocks/smarttime": "^3.0.12",
-    "@tsclass/tsclass": "^2.0.1"
+    "@tsclass/tsclass": "^2.0.13"
   },
   "files": [
-    "ts/*",
-    "ts_web/*",
-    "dist/*",
-    "dist_web/*",
-    "assets/*",
+    "ts/**/*",
+    "ts_web/**/*",
+    "dist/**/*",
+    "dist_web/**/*",
+    "dist_ts_web/**/*",
+    "assets/**/*",
     "cli.js",
     "npmextra.json",
     "readme.md"

@@ -66,57 +66,57 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
       for (const key of Object.keys(payment)) {
         const value: string = payment[key];
         if (value.startsWith('"')) {
-          payment[key] = value.substring(1, value.length-1);
+          payment[key] = value.substring(1, value.length - 1);
         }
       }
     }
 
     const finalTransactionArray: interfaces.ICommerzbankTransaction[] = [];
     for (const transaction of payments) {
-        // transaction.Buchungstag = transaction.Wertstellung;
-        // console.log(transaction.Buchungstag);
-        const finalTransaction: interfaces.ICommerzbankTransaction = {
-          simpleTransaction: null,
-          transactionHash: null,
-          original: transaction,
-          amount: plugins.smartmoney.parseEuropeanNumberString(transaction.Betrag),
-          currency: transaction.Währung,
-          description: transaction.Buchungstext,
-          transactionDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Buchungstag),
-          valuationDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Wertstellung),
-          transactionType: ((): interfaces.TTransactionType => {
-            switch (transaction.Umsatzart) {
-              case 'Gutschrift':
-                return 'Credit';
-              case 'Lastschrift':
-                return 'Debit';
-              case 'Zinsen/Entgelte':
-                return 'BankFees';
-              case 'Überweisung':
-                return 'ActiveTransfer';
-              default:
-                throw new Error(`unknown transactiontype ${transaction.Umsatzart}`);
-            }
-          })()
-        };
+      // transaction.Buchungstag = transaction.Wertstellung;
+      // console.log(transaction.Buchungstag);
+      const finalTransaction: interfaces.ICommerzbankTransaction = {
+        simpleTransaction: null,
+        transactionHash: null,
+        original: transaction,
+        amount: plugins.smartmoney.parseEuropeanNumberString(transaction.Betrag),
+        currency: transaction.Währung,
+        description: transaction.Buchungstext,
+        transactionDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Buchungstag),
+        valuationDate: plugins.smarttime.ExtendedDate.fromEuropeanDate(transaction.Wertstellung),
+        transactionType: ((): interfaces.TTransactionType => {
+          switch (transaction.Umsatzart) {
+            case 'Gutschrift':
+              return 'Credit';
+            case 'Lastschrift':
+              return 'Debit';
+            case 'Zinsen/Entgelte':
+              return 'BankFees';
+            case 'Überweisung':
+              return 'ActiveTransfer';
+            default:
+              throw new Error(`unknown transactiontype ${transaction.Umsatzart}`);
+          }
+        })()
+      };
 
-        // lets assign the transactionHash
-        finalTransaction.transactionHash = await plugins.smarthash.sha265FromObject({
-          description: finalTransaction.description,
-          amount: finalTransaction.amount,
-          date: finalTransaction.valuationDate
-        });
+      // lets assign the transactionHash
+      finalTransaction.transactionHash = await plugins.smarthash.sha265FromObject({
+        description: finalTransaction.description,
+        amount: finalTransaction.amount,
+        date: finalTransaction.valuationDate
+      });
 
-        finalTransaction.simpleTransaction = {
-          id: finalTransaction.transactionHash,
-          accountId: null,
-          name: finalTransaction.description,
-          amount: finalTransaction.amount,
-          description: finalTransaction.description,
-          date: finalTransaction.transactionDate
-        };
-        finalTransactionArray.push(finalTransaction);
-      }
+      finalTransaction.simpleTransaction = {
+        id: finalTransaction.transactionHash,
+        accountId: null,
+        name: finalTransaction.description,
+        amount: finalTransaction.amount,
+        description: finalTransaction.description,
+        date: finalTransaction.transactionDate
+      };
+      finalTransactionArray.push(finalTransaction);
+    }
 
     // lets preprocess those payments
     const csvCommerzbankInstance = new CsvCommerzbank(finalTransactionArray);
