@@ -56,25 +56,17 @@ export class CsvCommerzbank extends AcCsvParser<interfaces.ICommerzbankTransacti
 
     // lets parse the data from the directory
     const csvInstance = await plugins.smartcsv.Csv.createCsvFromString(csvStringArg, {
-      headers: true
+      headers: true,
+      unquote: true
     });
 
     // lets differentiate between payments and credits
     const payments: interfaces.ICommerzbankOriginalTransaction[] = await csvInstance.exportAsObject();
 
-    for (const payment of payments) {
-      for (const key of Object.keys(payment)) {
-        const value: string = payment[key];
-        if (value.startsWith('"')) {
-          payment[key] = value.substring(1, value.length - 1);
-        }
-      }
-    }
-
     const finalTransactionArray: interfaces.ICommerzbankTransaction[] = [];
     for (const transaction of payments) {
       // transaction.Buchungstag = transaction.Wertstellung;
-      // console.log(transaction.Buchungstag);
+      console.log(transaction);
       const finalTransaction: interfaces.ICommerzbankTransaction = {
         simpleTransaction: null,
         transactionHash: null,
